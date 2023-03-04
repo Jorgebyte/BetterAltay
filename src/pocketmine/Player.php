@@ -2093,6 +2093,7 @@ class Player extends Human implements CommandSender, ChunkLoader, IPlayer{
 	}
 
 	public function handleRequestNetworkSettings(RequestNetworkSettingsPacket $packet) : bool{
+		if($packet->protocolVersion === 567){ $packet->protocolVersion = ProtocolInfo::CURRENT_PROTOCOL;}
 		$protocolVersion = $packet->protocolVersion;
 		if($protocolVersion !== ProtocolInfo::CURRENT_PROTOCOL){
 			$this->sendPlayStatus($protocolVersion < ProtocolInfo::CURRENT_PROTOCOL ? PlayStatusPacket::LOGIN_FAILED_CLIENT : PlayStatusPacket::LOGIN_FAILED_SERVER, true);
