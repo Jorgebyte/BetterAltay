@@ -60,8 +60,11 @@ class KickCommand extends VanillaCommand{
 		$name = array_shift($args);
 		$reason = trim(implode(" ", $args));
 
+		$admin = $sender instanceof Player ? $sender->getName() : "CONSOLE";
+		$kickMessage = "Kicked by Admin: $admin, Reason: " . ($reason !== "" ? $reason : "No reason specified");
+
 		if(($player = $sender->getServer()->getPlayer($name)) instanceof Player){
-			$player->kick($reason);
+			$player->kick($kickMessage);
 			if($reason !== ""){
 				Command::broadcastCommandMessage($sender, new TranslationContainer("commands.kick.success.reason", [$player->getName(), $reason]));
 			}else{
@@ -74,3 +77,4 @@ class KickCommand extends VanillaCommand{
 		return true;
 	}
 }
+
